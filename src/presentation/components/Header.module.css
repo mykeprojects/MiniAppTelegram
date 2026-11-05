@@ -1,0 +1,63 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1.35rem 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.logo {
+  display: block;
+  width: 7rem;
+  height: 2.5rem;
+  object-fit: contain;
+}
+
+.logoFallback {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border-radius: 0.8rem;
+  background: var(--color-secondary);
+  color: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.brandName {
+  font-size: 1.05rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+}
+
+.brandUp {
+  color: var(--color-secondary);
+}
+
+.brandNews {
+  color: var(--color-primary);
+}
+
+.tag {
+  color: var(--color-primary);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 520px) {
+  .tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+}

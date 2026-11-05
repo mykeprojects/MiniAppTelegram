@@ -1,0 +1,73 @@
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 2rem 0 2.25rem;
+  position: relative;
+}
+
+.stepper::before {
+  position: absolute;
+  z-index: 0;
+  top: 1.15rem;
+  right: 16.5%;
+  left: 16.5%;
+  height: 1px;
+  background: var(--color-border);
+  content: '';
+}
+
+.step {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.number {
+  display: grid;
+  width: 2.3rem;
+  height: 2.3rem;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: 0 0 0 4px var(--color-primary-soft);
+}
+
+.complete {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.label,
+.activeLabel {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+}
+
+.activeLabel {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+@media (max-width: 420px) {
+  .stepper {
+    margin: 1.6rem 0 1.8rem;
+  }
+
+  .label,
+  .activeLabel {
+    font-size: 0.68rem;
+  }
+}

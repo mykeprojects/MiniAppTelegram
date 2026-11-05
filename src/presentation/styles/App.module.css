@@ -1,0 +1,83 @@
+.page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  background:
+    radial-gradient(ellipse at 12% 2%, rgba(39, 154, 146, 0.1), transparent 35%),
+    #f6f8f8;
+  padding: 0 1.25rem 2rem;
+}
+
+.shell {
+  width: min(100%, 46rem);
+  margin: 0 auto;
+}
+
+.card {
+  border: 1px solid rgba(22, 43, 45, 0.07);
+  border-radius: 1.1rem;
+  background: var(--color-white);
+  box-shadow: 0 1.4rem 4rem rgba(20, 54, 54, 0.08);
+  padding: clamp(1.35rem, 5vw, 2.75rem);
+}
+
+.intro {
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  color: var(--color-primary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.eyebrow span {
+  color: var(--color-secondary);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.7rem, 5vw, 2.15rem);
+  font-weight: 780;
+  letter-spacing: -0.06em;
+  line-height: 1.15;
+}
+
+.description {
+  margin: 0.6rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.successMessage,
+.errorMessage {
+  margin: 1rem 0 0;
+  border-radius: 0.6rem;
+  padding: 0.75rem 0.9rem;
+  font-size: 0.84rem;
+}
+
+.successMessage {
+  background: var(--color-primary-soft);
+  color: #176f69;
+}
+
+.errorMessage {
+  background: #fff0ef;
+  color: #a8312c;
+}
+
+.footer {
+  margin: 1.15rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .page {
+    padding-inline: 1rem;
+  }
+}
