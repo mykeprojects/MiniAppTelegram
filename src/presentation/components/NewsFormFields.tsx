@@ -1,5 +1,9 @@
-import { useField, useFormikContext } from 'formik'
+import { useField } from 'formik'
 import type { NewsSubmission } from '../../domain/models/news-submission'
+import {
+  NEWS_PURPOSE_OPTIONS,
+  NEWS_TAG_OPTIONS,
+} from '../../domain/models/news-options'
 import { ImageUpload } from './ImageUpload'
 import styles from './NewsFormFields.module.css'
 
@@ -118,38 +122,6 @@ function SelectInput({
   )
 }
 
-function OriginFields() {
-  const { touched, values, errors } = useFormikContext<NewsSubmission>()
-  const showPairError =
-    Boolean(errors.moduloOrigen) &&
-    !touched.moduloOrigen &&
-    (Boolean(touched.registroOrigenId) ||
-      Boolean(values.moduloOrigen) ||
-      Boolean(values.registroOrigenId))
-
-  return (
-    <>
-      <div className={styles.fieldGrid}>
-        <TextInput
-          label="Módulo de origen"
-          name="moduloOrigen"
-          placeholder="Ej. eventos"
-        />
-        <TextInput
-          label="Identificador del registro"
-          name="registroOrigenId"
-          placeholder="Ej. 123e4567-e89b-12d3-a456-426614174000"
-        />
-      </div>
-      {showPairError && (
-        <p className={styles.fieldError} role="alert">
-          {errors.moduloOrigen}
-        </p>
-      )}
-    </>
-  )
-}
-
 export function NewsFormFields({ step, image, onImageChange }: NewsFormFieldsProps) {
   if (step === 1) {
     return (
@@ -198,40 +170,13 @@ export function NewsFormFields({ step, image, onImageChange }: NewsFormFieldsPro
           label="Propósito"
           name="proposito"
           placeholder="Selecciona el propósito de la noticia"
-          options={[
-            { value: 'Informar a la comunidad', label: 'Informar a la comunidad' },
-            {
-              value: 'Educar y compartir conocimientos',
-              label: 'Educar y compartir conocimientos',
-            },
-            {
-              value: 'Promover la salud y el bienestar',
-              label: 'Promover la salud y el bienestar',
-            },
-            {
-              value: 'Invitar a participar en actividades',
-              label: 'Invitar a participar en actividades',
-            },
-            {
-              value: 'Sensibilizar sobre una causa',
-              label: 'Sensibilizar sobre una causa',
-            },
-            {
-              value: 'Compartir recursos y servicios',
-              label: 'Compartir recursos y servicios',
-            },
-          ]}
+          options={NEWS_PURPOSE_OPTIONS.map((value) => ({ value, label: value }))}
         />
         <SelectInput
           label="Etiqueta"
           name="etiqueta"
           placeholder="Selecciona una etiqueta"
-          options={[
-            { value: 'Comunidad', label: 'Comunidad' },
-            { value: 'Eventos', label: 'Eventos' },
-            { value: 'Salud', label: 'Salud' },
-            { value: 'Consejos', label: 'Consejos' },
-          ]}
+          options={NEWS_TAG_OPTIONS.map((value) => ({ value, label: value }))}
         />
       </section>
     )
@@ -239,22 +184,22 @@ export function NewsFormFields({ step, image, onImageChange }: NewsFormFieldsPro
 
   return (
     <section className={styles.fields} aria-labelledby="step-title">
-      <h2 className={styles.stepTitle} id="step-title">
-        Configura el origen
-      </h2>
+      <h2 className={styles.stepTitle} id="step-title">Configura la publicación</h2>
       <p className={styles.stepDescription}>
-        Indica desde dónde se creó esta publicación y, si aplica, su referencia.
+        Elige el estado inicial de tu noticia.
       </p>
       <SelectInput
-        label="Canal de publicación"
-        name="canalId"
-        placeholder="Selecciona el canal"
+        label="Estado inicial"
+        name="estado"
+        placeholder="Selecciona el estado"
         options={[
-          { value: 'web', label: 'Web' },
-          { value: 'telegram', label: 'Telegram' },
+          { value: 'BORRADOR', label: 'Borrador' },
+          {
+            value: 'PENDIENTE_APROBACION',
+            label: 'En espera por aprobación',
+          },
         ]}
       />
-      <OriginFields />
     </section>
   )
 }

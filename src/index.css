@@ -30,6 +30,242 @@ body {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.workspace {
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding-bottom: 6rem;
+}
+
+.workspace-intro {
+  margin: 1.5rem 0;
+}
+
+.workspace-intro h1 {
+  margin: 0.3rem 0;
+  color: var(--color-ink);
+}
+
+.workspace-intro p:last-child {
+  color: var(--color-muted);
+}
+
+.director-bottom-nav {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 0.5rem 1rem calc(0.5rem + env(safe-area-inset-bottom));
+  box-shadow: 0 -0.3rem 1rem rgba(20, 54, 54, 0.06);
+  backdrop-filter: blur(0.75rem);
+}
+
+.director-bottom-nav button {
+  display: grid;
+  width: min(5rem, 28vw);
+  min-height: 3.25rem;
+  place-items: center;
+  border: 0;
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--color-muted);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.director-bottom-nav button.active {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.director-bottom-nav button:focus-visible,
+.row-actions .icon-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.management-card {
+  margin: 1.25rem 0;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: var(--color-white);
+  box-shadow: 0 0.6rem 2rem rgba(20, 54, 54, 0.05);
+}
+
+.management-heading,
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.management-heading h2 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 1.15rem;
+}
+
+.primary-button,
+.form-actions button,
+.row-actions button {
+  min-height: 2.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  background: white;
+  color: var(--color-ink);
+  padding: 0.45rem 0.75rem;
+}
+
+.primary-button {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: white;
+  font-weight: 650;
+}
+
+.danger-button {
+  color: #a8312c !important;
+}
+
+.table-scroll {
+  width: 100%;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  min-width: 7rem;
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.8rem 0.65rem;
+  vertical-align: middle;
+}
+
+th {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+td {
+  color: var(--color-ink);
+  font-size: 0.88rem;
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.row-actions button {
+  min-height: 2rem;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.78rem;
+}
+
+.row-actions .icon-button {
+  display: inline-grid;
+  width: 2.25rem;
+  min-height: 2.25rem;
+  place-items: center;
+  padding: 0;
+  color: #476364;
+}
+
+.row-actions .icon-button:hover {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.row-actions .icon-button.danger-button {
+  color: #c03932 !important;
+}
+
+.row-actions .icon-button.danger-button:hover {
+  background: #fff0ef;
+  color: #a8312c !important;
+}
+
+.management-form {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--color-ink);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+  background: white;
+  color: var(--color-ink);
+  padding: 0.7rem 0.8rem;
+  font-weight: 400;
+}
+
+.form-field textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  justify-content: flex-end;
+  margin-top: 0.3rem;
+}
+
+.form-error {
+  border-radius: 0.55rem;
+  background: #fff0ef;
+  color: #a8312c;
+  padding: 0.7rem 0.8rem;
+}
+
+.empty-state {
+  margin: 1.5rem 0 0;
+  color: var(--color-muted);
+}
+
+@media (max-width: 600px) {
+  .management-heading {
+    align-items: flex-start;
+  }
+
+  .director-bottom-nav {
+    gap: 0.25rem;
+  }
 }

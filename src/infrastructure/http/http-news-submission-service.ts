@@ -29,9 +29,7 @@ export class HttpNewsSubmissionService implements NewsSubmissionService {
         cuerpo: news.cuerpo,
         proposito: news.proposito || undefined,
         etiqueta: news.etiqueta || undefined,
-        canal: news.canalId,
-        moduloOrigen: news.moduloOrigen || undefined,
-        registroOrigenId: news.registroOrigenId || undefined,
+        estado: news.estado,
         imagenUrl: imageUrl,
       }),
     })
