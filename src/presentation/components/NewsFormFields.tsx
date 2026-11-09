@@ -20,6 +20,8 @@ interface TextInputProps {
   required?: boolean
   rows?: number
   hint?: string
+  type?: 'text' | 'url'
+  disabled?: boolean
 }
 
 interface SelectInputProps {
@@ -41,6 +43,8 @@ function TextInput({
   required = false,
   rows,
   hint,
+  type = 'text',
+  disabled = false,
 }: TextInputProps) {
   const [field, meta] = useField<string>(name)
   const hasError = meta.touched && Boolean(meta.error)
@@ -69,7 +73,7 @@ function TextInput({
           rows={rows}
         />
       ) : (
-        <input {...commonProps} className={controlClass} />
+        <input {...commonProps} type={type} className={controlClass} disabled={disabled} />
       )}
       {hint && <span className={styles.hint}>{hint}</span>}
       {hasError && (
@@ -123,6 +127,7 @@ function SelectInput({
 }
 
 export function NewsFormFields({ step, image, onImageChange }: NewsFormFieldsProps) {
+  const [videoField] = useField<string>('videoUrl')
   if (step === 1) {
     return (
       <section className={styles.fields} aria-labelledby="step-title">
@@ -146,7 +151,19 @@ export function NewsFormFields({ step, image, onImageChange }: NewsFormFieldsPro
           required
           rows={7}
         />
-        <ImageUpload image={image} onChange={onImageChange} />
+        <ImageUpload
+          image={image}
+          onChange={onImageChange}
+          disabled={Boolean(videoField.value.trim())}
+        />
+        <TextInput
+          label="Enlace del video de YouTube"
+          name="videoUrl"
+          type="url"
+          placeholder="https://www.youtube.com/watch?v=..."
+          disabled={Boolean(image)}
+          hint="Opcional. Puedes adjuntar una imagen o un video, no ambos."
+        />
       </section>
     )
   }

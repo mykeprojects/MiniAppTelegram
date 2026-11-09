@@ -13,11 +13,14 @@ export interface ManagedNews
     | 'resumen'
     | 'proposito'
     | 'etiqueta'
+    | 'videoUrl'
   > {
   id: string
   resumen: string | null
   proposito: string | null
   etiqueta: string | null
+  imagenUrl: string | null
+  tipoEvidencia: 'IMAGEN' | 'VIDEO' | null
   estado: NewsState
   estaActivo: boolean
   autorId: string

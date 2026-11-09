@@ -6,6 +6,7 @@ import {
   NEWS_PURPOSE_OPTIONS,
   NEWS_TAG_OPTIONS,
 } from '../../domain/models/news-options'
+import { getYouTubeVideoId } from '../../domain/models/youtube-video'
 
 const estadosEditables: { value: NewsSubmission['estado']; label: string }[] = [
   { value: 'BORRADOR', label: 'Borrador' },
@@ -27,6 +28,7 @@ const estadoVacio: NewsSubmission = {
   cuerpo: '',
   proposito: '',
   etiqueta: '',
+  videoUrl: '',
   estado: 'BORRADOR',
 }
 
@@ -44,6 +46,8 @@ export function NewsManagementForm({
     resumen: initial?.resumen ?? '',
     proposito: initial?.proposito ?? '',
     etiqueta: initial?.etiqueta ?? '',
+    videoUrl:
+      initial?.tipoEvidencia === 'VIDEO' ? initial.imagenUrl ?? '' : '',
     estado:
       initial?.estado === 'PENDIENTE_APROBACION'
         ? initial.estado
@@ -63,6 +67,10 @@ export function NewsManagementForm({
     setBusy(true)
     setError(null)
     try {
+      if (values.videoUrl.trim() && !getYouTubeVideoId(values.videoUrl.trim())) {
+        setError('Ingresa un enlace válido de un video de YouTube.')
+        return
+      }
       if (
         initial &&
         !image &&
@@ -70,7 +78,9 @@ export function NewsManagementForm({
         values.cuerpo.trim() === initial.cuerpo &&
         values.resumen.trim() === (initial.resumen ?? '') &&
         values.proposito.trim() === (initial.proposito ?? '') &&
-        values.etiqueta.trim() === (initial.etiqueta ?? '')
+        values.etiqueta.trim() === (initial.etiqueta ?? '') &&
+        values.videoUrl.trim() ===
+          (initial.tipoEvidencia === 'VIDEO' ? initial.imagenUrl ?? '' : '')
       ) {
         onCancel()
         return
@@ -173,7 +183,30 @@ export function NewsManagementForm({
           NEWS_TAG_OPTIONS.map((value) => ({ value, label: value })),
         )}
         {!readOnly && (
-          <ImageUpload image={image} onChange={setImage} />
+          <>
+            <ImageUpload
+              image={image}
+              onChange={setImage}
+              disabled={Boolean(values.videoUrl.trim())}
+            />
+            <label className="form-field">
+              <span>Enlace del video de YouTube (opcional)</span>
+              <input
+                type="url"
+                value={values.videoUrl}
+                onChange={(event) => setField('videoUrl', event.target.value)}
+                placeholder="https://www.youtube.com/watch?v=..."
+                disabled={readOnly || busy || Boolean(image)}
+              />
+              <small>Puedes adjuntar una imagen o un video, no ambos.</small>
+            </label>
+          </>
+        )}
+        {readOnly && initial?.tipoEvidencia === 'VIDEO' && initial.imagenUrl && (
+          <label className="form-field">
+            <span>Video de YouTube</span>
+            <input type="url" value={initial.imagenUrl} readOnly />
+          </label>
         )}
         {!readOnly && currentNews && (
           <div className="form-actions">

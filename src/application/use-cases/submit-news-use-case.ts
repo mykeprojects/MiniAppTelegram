@@ -24,6 +24,9 @@ export class SubmitNewsUseCase {
 
   async execute(input: NewsSubmission, image?: File): Promise<void> {
     const validatedNews = await this.validator.validate(input)
+    if (image && validatedNews.videoUrl.trim()) {
+      throw new Error('Adjunta una imagen o un video de YouTube, no ambos.')
+    }
     const initData = this.telegramService.getInitData()
     const imageUrl = image
       ? await this.imageStorageService.uploadImage(image, initData)

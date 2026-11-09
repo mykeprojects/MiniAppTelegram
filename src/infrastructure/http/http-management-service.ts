@@ -29,6 +29,16 @@ export class HttpManagementService implements ManagementService {
     id?: string,
     original?: ManagedNews,
   ): Promise<ManagedNews> {
+    if (imageUrl && news.videoUrl.trim()) {
+      throw new Error('Adjunta una imagen o un video de YouTube, no ambos.')
+    }
+    const evidenciaUrl = imageUrl ?? (news.videoUrl.trim() || undefined)
+    const quitarVideo = Boolean(
+      id &&
+        original?.tipoEvidencia === 'VIDEO' &&
+        !news.videoUrl.trim() &&
+        !imageUrl,
+    )
     const optionalFields = [
       'resumen',
       'proposito',
@@ -46,7 +56,7 @@ export class HttpManagementService implements ManagementService {
         }
       }
 
-      if (Object.keys(changes).length === 0 && !imageUrl) {
+      if (Object.keys(changes).length === 0 && !evidenciaUrl && !quitarVideo) {
         return Promise.resolve(original)
       }
 
@@ -54,12 +64,16 @@ export class HttpManagementService implements ManagementService {
         method: 'PATCH',
         body: JSON.stringify({
           ...changes,
-          ...(imageUrl ? { imagenUrl: imageUrl } : {}),
+          ...(quitarVideo
+            ? { imagenUrl: null }
+            : evidenciaUrl
+              ? { imagenUrl: evidenciaUrl }
+              : {}),
         }),
       })
     }
 
-    const { estado, ...contenido } = news
+    const { estado, videoUrl: _videoUrl, ...contenido } = news
     const optionalContent = Object.fromEntries(
       optionalFields.flatMap((field) => {
         const value = contenido[field].trim()
@@ -72,7 +86,7 @@ export class HttpManagementService implements ManagementService {
         ...contenido,
         ...optionalContent,
         estado,
-        ...(imageUrl ? { imagenUrl: imageUrl } : {}),
+        ...(evidenciaUrl ? { imagenUrl: evidenciaUrl } : {}),
       }),
     })
   }

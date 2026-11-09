@@ -17,6 +17,10 @@ export class HttpNewsSubmissionService implements NewsSubmissionService {
     imageUrl: string | undefined,
     initData: string,
   ): Promise<void> {
+    if (imageUrl && news.videoUrl.trim()) {
+      throw new Error('Adjunta una imagen o un video de YouTube, no ambos.')
+    }
+    const { videoUrl, ...contenido } = news
     const response = await fetch(`${this.apiUrl}/api/miniapp/publicaciones`, {
       method: 'POST',
       headers: {
@@ -24,13 +28,13 @@ export class HttpNewsSubmissionService implements NewsSubmissionService {
         'X-Telegram-Init-Data': initData,
       },
       body: JSON.stringify({
-        titulo: news.titulo,
-        resumen: news.resumen || undefined,
-        cuerpo: news.cuerpo,
-        proposito: news.proposito || undefined,
-        etiqueta: news.etiqueta || undefined,
-        estado: news.estado,
-        imagenUrl: imageUrl,
+        titulo: contenido.titulo,
+        resumen: contenido.resumen || undefined,
+        cuerpo: contenido.cuerpo,
+        proposito: contenido.proposito || undefined,
+        etiqueta: contenido.etiqueta || undefined,
+        estado: contenido.estado,
+        imagenUrl: videoUrl.trim() || imageUrl,
       }),
     })
 

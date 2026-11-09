@@ -43,11 +43,12 @@ const initialValues: NewsSubmission = {
   cuerpo: '',
   proposito: '',
   etiqueta: '',
+  videoUrl: '',
   estado: 'BORRADOR',
 }
 
 const stepFields: Record<number, (keyof NewsSubmission)[]> = {
-  1: ['titulo', 'cuerpo'],
+  1: ['titulo', 'cuerpo', 'videoUrl'],
   2: ['resumen', 'proposito', 'etiqueta'],
   3: ['estado'],
 }
